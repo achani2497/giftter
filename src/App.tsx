@@ -1,32 +1,32 @@
-import { useState } from 'react'
-// import './App.css'
-import { Link, Route, Routes } from 'react-router-dom'
-import { About } from './components/About/About'
-import { Contact } from './components/Contact/Contact'
-import { Home } from './components/Home/Home'
+import { Route, Routes } from 'react-router-dom'
+import './App.css'
+import NavBar from './components/NavBar/NavBar'
 import './index.css'
+import { Home } from './views/Home/Home'
+import { Ideas } from './views/Ideas/Ideas'
+import { Login } from './views/Login/Login'
+import { MyWishlist } from './views/MyWishlist/MyWishlist'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      {/* <p>
-        Edit <code>src/App.tsx</code> and save to test HMR
-      </p> */}
-      <nav className='w-full bg-red-400'>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-    </>
+    <div className='flex flex-col justify-between w-full h-screen'>
+      {/* NavigationBar */}
+      <NavBar />
+      {/* Pages */}
+      <main className='grow px-8 md:px-16 lg:px-32 py-8 '>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/mi-lista" element={<MyWishlist />} />
+          <Route path="/sugerencia" element={<Ideas />} />
+        </Routes>
+      </main>
+      {/* Footer */}
+      <div className='bg-red-400 px-8 md:px-16 lg:px-32 py-12'>
+        <h1>Soy el footer</h1>
+      </div>
+    </div>
   )
 }
 
