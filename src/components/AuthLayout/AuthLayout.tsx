@@ -1,7 +1,14 @@
 import { GiftIcon } from "@heroicons/react/24/outline";
+import { Navigate, useLocation } from "react-router-dom";
+import { useIsAuthenticated } from "../../hooks/Auth";
 
 export function AuthLayout({ isSignup = false, isAwaitingConfirmation = false, children }: { isSignup?: boolean, isAwaitingConfirmation?: boolean, children: JSX.Element }) {
-    return (
+
+    const userIsAuthenticated = useIsAuthenticated()
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
+
+    return !userIsAuthenticated ? (
         <div className="flex flex-col absolute top-0 left-0 h-full w-full overflow-y-scroll bg-slate-100">
             <div className="flex flex-col p-4 justify-center shadow-lg items-center text-center rounded-b-3xl bg-yellow-400">
                 <GiftIcon className="h-[106px] w-h-[106px] text-slate-500" />
@@ -11,5 +18,7 @@ export function AuthLayout({ isSignup = false, isAwaitingConfirmation = false, c
             </div>
             {children}
         </div>
+    ) : (
+        <Navigate to={from} state={{ from: location }} replace />
     )
 }

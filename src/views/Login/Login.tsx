@@ -1,18 +1,15 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Navigate, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { AuthLayout } from '../../components/AuthLayout/AuthLayout'
 import { Spinner } from '../../components/Feedback/Spinner/Spinner'
 import { LoginForm } from './LoginForm'
 
 export function Login() {
     const [isSubmiting, setIsSubmiting] = useState(false)
-    const userData = useSelector((store: any) => store.user.data);
-
     let location = useLocation();
     let from = location.state?.from?.pathname || "/";
 
-    return !userData.isAuthenticated ? (
+    return (
         <AuthLayout>
             <div className="flex flex-col gap-4 p-8 justify-center text-left items-center h-full">
                 {isSubmiting ? (
@@ -24,8 +21,5 @@ export function Login() {
                 )}
             </div>
         </AuthLayout>
-    ) : (
-        <Navigate to={from} state={{ from: location }} replace />
     )
-
 }

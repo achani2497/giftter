@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Input, Password } from "../../components/Form/Input/Input";
 import { errorReducer } from "../../hooks/Auth";
-import { EmailAlreadyUsed, signUp } from "../../utils/Auth";
+import { signUp } from "../../utils/Auth";
+import { EmailAlreadyUsed } from "../../utils/Errors";
 import { Validations } from "../../utils/Validations";
 import { SignUp } from "../../utils/types";
 

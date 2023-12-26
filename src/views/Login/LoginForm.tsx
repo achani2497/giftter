@@ -18,7 +18,7 @@ export function LoginForm({ setIsSubmiting, from }: { setIsSubmiting: any, from:
         setIsSubmiting(true)
         login(data)
             .then((data) => {
-                dispatch(setIsAuthenticated())
+                dispatch(setIsAuthenticated(true))
                 dispatch(setUserData(data))
                 navigate(from, { replace: true })
             })

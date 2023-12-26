@@ -6,13 +6,22 @@ import {
     PURGE,
     REGISTER,
     REHYDRATE,
+    persistReducer,
     persistStore
 } from "redux-persist";
+import storage from 'redux-persist/lib/storage';
 
 import { userSlice } from "./Slice/user";
 
+const persistConfig = {
+    key: 'gifter',
+    storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, userSlice.reducer)
+
 export const store = configureStore({
-    reducer: { user: userSlice.reducer },
+    reducer: { user: persistedReducer },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
@@ -20,4 +29,5 @@ export const store = configureStore({
             },
         }),
 });
+
 export let persistor = persistStore(store);

@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 export interface ErrorState {
     type: 'GENERIC' | 'EMAIL_USED';
     message: string;
@@ -15,4 +17,9 @@ export function errorReducer(state: ErrorState, action: ActionType): ErrorState 
         default:
             return { type: 'GENERIC', message: genericError };
     }
+}
+
+export function useIsAuthenticated() {
+    const userData = useSelector((store: any) => store.user.data);
+    return userData.isAuthenticated
 }

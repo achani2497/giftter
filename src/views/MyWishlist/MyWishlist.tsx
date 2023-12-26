@@ -16,6 +16,7 @@ export function MyWishlist() {
         <div className="flex flex-col gap-8">
             {/* Encabezado de la seccion */}
             <div className="flex flex-col gap-2">
+                <h2>REHACER ESTO, NO QUEDA BIEN, QUITAR EL ICONO DEL ENGRANAJE</h2>
                 <div className="flex justify-between items-center">
                     <div className="flex justify-center items-center rounded-lg shadow-lg p-4 bg-gradient-to-b from-white via-transparent to-neutral-100">
                         <Cog6ToothIcon className="h-6 w-6 text-black" />
@@ -94,7 +95,7 @@ export function MyWishlist() {
                         </ul>
                     )
                 }
-                <button className="absolute w-full bottom-0 py-2 px-4 rounded-lg shadow-xl text-slate-600 flex gap-2 justify-center items-center bg-yellow-300" onClick={() => {
+                <button className="absolute w-full bottom-0 py-2 px-4 rounded-lg shadow-xl text-slate-700 flex gap-2 justify-center items-center bg-yellow-400" onClick={() => {
                     setOpenEditModal(true)
                     setGiftToEdit(null)
                 }}>

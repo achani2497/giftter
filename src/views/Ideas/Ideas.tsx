@@ -69,14 +69,14 @@ export function Ideas() {
                 <div className="flex flex-col gap-4">
 
                     <button
-                        className={"p-3 rounded-lg shadow-md hover:shadow-none transition-all duration-300 font-bold bg-yellow-300 disabled:bg-slate-200 disabled:text-slate-500 disabled:shadow-inner"}
+                        className={"p-3 rounded-lg shadow-md hover:shadow-none transition-all duration-300 font-bold bg-yellow-400 text-slate-700 disabled:bg-slate-200 disabled:text-slate-500 disabled:shadow-inner"}
                         onClick={handleSend}
                         disabled={disabled}
                     >
                         Consultar
                     </button>
                     <button
-                        className="p-3 rounded-lg shadow-md hover:shadow-none transition-all duration-300 font-bold text-white bg-purple-500"
+                        className="p-3 rounded-lg shadow-md hover:shadow-none transition-all duration-300 font-bold text-white bg-purple-600"
                         // style={{ backgroundColor: 'var(--purple)' }}
                         onClick={saveChat}
                     >

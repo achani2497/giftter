@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
     status: {
         isFetching: false,
     },
@@ -22,8 +22,8 @@ export const userSlice = createSlice({
                 state.data.last_name = action.payload.last_name,
                 state.data.email = action.payload.email
         },
-        setIsAuthenticated: (state) => {
-            state.data.isAuthenticated = true
+        setIsAuthenticated: (state, action) => {
+            state.data.isAuthenticated = action.payload
         },
         setIsFetching: (state) => {
             state.status.isFetching = true;

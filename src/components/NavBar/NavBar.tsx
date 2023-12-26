@@ -1,7 +1,9 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { logout } from '../../utils/Auth'
 import styles from './NavBar.module.css'
 
 const navigation = [
@@ -14,6 +16,7 @@ function classNames(...classes: any) {
 }
 
 export default function NavBar() {
+    const dispatch = useDispatch()
     return (
         <Disclosure as="nav" className="shadow-xl">
             {({ open }) => (
@@ -77,7 +80,7 @@ export default function NavBar() {
                                         leaveTo="transform opacity-0 scale-95"
                                     >
                                         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                            <Menu.Item>
+                                            {/* <Menu.Item>
                                                 {({ active }) => (
                                                     <a
                                                         href="#"
@@ -86,8 +89,8 @@ export default function NavBar() {
                                                         Your Profile
                                                     </a>
                                                 )}
-                                            </Menu.Item>
-                                            <Menu.Item>
+                                            </Menu.Item> */}
+                                            {/* <Menu.Item>
                                                 {({ active }) => (
                                                     <a
                                                         href="#"
@@ -96,15 +99,15 @@ export default function NavBar() {
                                                         Settings
                                                     </a>
                                                 )}
-                                            </Menu.Item>
+                                            </Menu.Item> */}
                                             <Menu.Item>
                                                 {({ active }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                    <button
+                                                        onClick={() => logout(dispatch)}
+                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700 w-full text-left')}
                                                     >
                                                         Sign out
-                                                    </a>
+                                                    </button>
                                                 )}
                                             </Menu.Item>
                                         </Menu.Items>

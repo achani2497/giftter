@@ -1,11 +1,8 @@
+import { initialState, setIsAuthenticated, setUserData } from "../Redux/Slice/user";
+import { EmailAlreadyUsed } from "./Errors";
 import { supabase } from "./Supabase";
 import { LoginUser, SignUp, User } from './types';
 
-export class EmailAlreadyUsed extends Error {
-    constructor(message: string) {
-        super(message)
-    }
-}
 
 export async function signUp({ email, password, first_name, last_name, birth_date }: SignUp) {
     const { data, error } = await supabase.auth.signUp(
@@ -53,10 +50,9 @@ export async function login({ email, password }: LoginUser): Promise<User> {
     }
 }
 
-export async function signOut() {
-    const { error } = await supabase.auth.signOut()
-
-    if (error) {
-        throw new Error(error.message)
-    }
+export function logout(dispatch: any) {
+    supabase.auth.signOut().then(() => {
+        dispatch(setIsAuthenticated(false))
+        dispatch(setUserData(initialState))
+    }).catch(e => { throw new Error(e.message) })
 }
