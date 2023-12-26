@@ -1,32 +1,20 @@
-import { ArrowRightStartOnRectangleIcon, BookmarkIcon, Cog6ToothIcon, GiftIcon, PencilSquareIcon, UserCircleIcon, UserPlusIcon } from "@heroicons/react/16/solid";
+import { ArrowRightStartOnRectangleIcon, BookmarkIcon, Cog6ToothIcon, GiftIcon, PencilIcon, PencilSquareIcon, TrashIcon, UserCircleIcon, UserPlusIcon } from "@heroicons/react/16/solid";
+import { useState } from "react";
+import { GiftSkeleton } from "../../components/Feedback/GiftSkeleton";
+import { Modal } from "../../components/Modal/Modal";
+import { useFetchGifts } from "../../hooks/Gift";
+import { IGift } from "../../utils/types";
+import { GiftForm } from "./components/GiftForm";
 
 export function MyWishlist() {
-    const gifts = [
-        {
-            title: 'Zapatos',
-            url: 'https://www.mercadolibre.com.ar/samsung-galaxy-a34-128gb-6gb-ram-awesome-silver/p/MLA22385547?pdp_filters=deal%3AMLA779357-1#polycard_client=homes-korribanSearchTodayPromotions&searchVariation=MLA22385547&position=5&search_layout=grid&type=product&tracking_id=0d0dd26a-b541-4392-ad21-edae9ffb3b1e'
-        }, {
-            title: 'Auriculares',
-            url: 'https://www.mercadolibre.com.ar/luz-de-emergencia-led-220v-potente-con-bateria-recargable-4w/p/MLA19847827#polycard_client=recommendations_home_second-trend-function-recommendations&reco_backend=second_trend_function&reco_client=home_second-trend-function-recommendations&reco_item_pos=1&reco_backend_type=function&reco_id=ad3682a6-3b62-4f9b-944a-0cf7810d0b15&wid=MLA1394483883&sid=recos'
-        },
-        {
-            title: 'Zapatos',
-            url: 'https://www.mercadolibre.com.ar/samsung-galaxy-a34-128gb-6gb-ram-awesome-silver/p/MLA22385547?pdp_filters=deal%3AMLA779357-1#polycard_client=homes-korribanSearchTodayPromotions&searchVariation=MLA22385547&position=5&search_layout=grid&type=product&tracking_id=0d0dd26a-b541-4392-ad21-edae9ffb3b1e'
-        }, {
-            title: 'Auriculares',
-            url: 'https://www.mercadolibre.com.ar/luz-de-emergencia-led-220v-potente-con-bateria-recargable-4w/p/MLA19847827#polycard_client=recommendations_home_second-trend-function-recommendations&reco_backend=second_trend_function&reco_client=home_second-trend-function-recommendations&reco_item_pos=1&reco_backend_type=function&reco_id=ad3682a6-3b62-4f9b-944a-0cf7810d0b15&wid=MLA1394483883&sid=recos'
-        },
-        {
-            title: 'Zapatos',
-            url: 'https://www.mercadolibre.com.ar/samsung-galaxy-a34-128gb-6gb-ram-awesome-silver/p/MLA22385547?pdp_filters=deal%3AMLA779357-1#polycard_client=homes-korribanSearchTodayPromotions&searchVariation=MLA22385547&position=5&search_layout=grid&type=product&tracking_id=0d0dd26a-b541-4392-ad21-edae9ffb3b1e'
-        }, {
-            title: 'Auriculares',
-            url: 'https://www.mercadolibre.com.ar/luz-de-emergencia-led-220v-potente-con-bateria-recargable-4w/p/MLA19847827#polycard_client=recommendations_home_second-trend-function-recommendations&reco_backend=second_trend_function&reco_client=home_second-trend-function-recommendations&reco_item_pos=1&reco_backend_type=function&reco_id=ad3682a6-3b62-4f9b-944a-0cf7810d0b15&wid=MLA1394483883&sid=recos'
-        },
-    ]
+    const [isEditing, setIsEditing] = useState(false)
+    const [giftToEdit, setGiftToEdit] = useState<IGift | null>()
+    const [openEditModal, setOpenEditModal] = useState(false)
+    const { gifts, isLoading } = useFetchGifts('4a565e33-6c6b-4387-b863-78e5eb9dd7a2')
 
     return (
         <div className="flex flex-col gap-8">
+            {/* Encabezado de la seccion */}
             <div className="flex flex-col gap-2">
                 <div className="flex justify-between items-center">
                     <div className="flex justify-center items-center rounded-lg shadow-lg p-4 bg-gradient-to-b from-white via-transparent to-neutral-100">
@@ -38,45 +26,91 @@ export function MyWishlist() {
                     </div>
                 </div>
                 <div className="text-center">
-                    <p>Buscá y encontrá tus regalos favoritos</p>
+                    <p className="text-lg">Buscá y encontrá tus regalos favoritos</p>
                 </div>
             </div>
+            {/* Estadisticas */}
             <div className="flex flex-col gap-2">
-                <h3 className="font-bold text-xl">Mis estadísticas</h3>
+                <h3 className="font-bold text-xl text-slate-600">Mis estadísticas</h3>
                 <div className="flex justify-between">
-                    <div className="flex flex-col items-center">
-                        <BookmarkIcon className="h-8 w-8 text-black" />
+                    <div className="flex flex-col items-center text-slate-600">
+                        <BookmarkIcon className="h-8 w-8 text-slate-400" />
                         <h4 className="font-semibold">Regalos guardados</h4>
                     </div>
-                    <div className="flex flex-col items-center">
-                        <GiftIcon className="h-8 w-8 text-black" />
+                    <div className="flex flex-col items-center text-slate-600">
+                        <GiftIcon className="h-8 w-8 text-slate-400" />
                         <h4 className="font-semibold">Regalos recibidos</h4>
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col gap-4">
+            {/* Regalos */}
+            <div className="flex flex-col gap-4 pb-16 relative">
+                {/* Encabezado */}
                 <div className="flex justify-between items-center">
-                    <h3 className="font-bold text-xl">Mi lista de deseados</h3>
-                    <button className="rounded-lg shadow-lg p-2 text-blue-500 flex gap-1 text-lg items-center">
-                        Editar
+                    <h3 className="font-bold text-xl text-slate-600">Mi lista de deseados</h3>
+                    {gifts.length ? (<button className=" text-blue-500 flex gap-1 text-lg items-center" onClick={() => setIsEditing(!isEditing)}>
+                        <span>{isEditing ? 'Dejar de editar' : 'Editar'}</span>
                         <PencilSquareIcon className="h-6 w-6" />
-                    </button>
+                    </button>) : null}
                 </div>
-                <ul className="flex flex-col gap-6">
-                    {gifts.map((gift, index): any => (
-                        <li key={index} className="flex items-center bg-white shadow-lg rounded-lg p-2 gap-4">
-                            <GiftIcon className="h-16 w-16 text-slate-500" />
-                            <div className="flex flex-col gap-2">
-                                <h4 className="font-semibold text-lg">{gift.title}</h4>
-                                <a href={gift.url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-blue-600">
-                                    <ArrowRightStartOnRectangleIcon className="h-6 w-6" />
-                                    Ver publicación del regalo
-                                </a>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                {/* Lista de regalos */}
+                {
+                    isLoading ? (
+                        <>
+                            <GiftSkeleton />
+                            <GiftSkeleton />
+                            <GiftSkeleton />
+                        </>
+                    ) : (
+
+                        <ul className={"flex flex-col gap-4 pb-4 max-h-[400px] shadow-inner overflow-y-scroll overflow-x-hidden px-2"}>
+                            {gifts.length ? gifts.map((gift: IGift, index: number) => (
+                                <li key={index} className={`flex min-h-[100px] items-center grow bg-white shadow-lg rounded-lg overflow-hidden ${isEditing ? '' : 'p-2'}`}>
+                                    {isEditing && (
+                                        <button className="flex justify-center items-center h-[100px] bg-red-400 w-12">
+                                            <TrashIcon className="h-6 w-6 text-white" />
+                                        </button>
+                                    )}
+                                    <div className="flex gap-4 items-center">
+                                        <GiftIcon className="h-16 w-16 text-slate-500" />
+                                        <div className="flex flex-col gap-2">
+                                            <h4 className="font-semibold text-lg">{gift.title}</h4>
+                                            <a href={gift.url} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-blue-500">
+                                                <ArrowRightStartOnRectangleIcon className="h-6 w-6" />
+                                                Ver publicación del regalo
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {isEditing && (
+                                        <button className="flex justify-center items-center h-[100px] bg-blue-400 w-12" onClick={() => {
+                                            setOpenEditModal(true)
+                                            setGiftToEdit(gift)
+                                        }}>
+                                            <PencilIcon className="h-6 w-6 text-white" />
+                                        </button>
+                                    )}
+                                </li>
+                            )) : <h4 className="text-lg font-semibold text-slate-600 text-center"> Todavía no tenes regalos en tu lista. Agrega alguno! </h4>}
+                        </ul>
+                    )
+                }
+                <button className="absolute w-full bottom-0 py-2 px-4 rounded-lg shadow-xl text-slate-600 flex gap-2 justify-center items-center bg-yellow-300" onClick={() => {
+                    setOpenEditModal(true)
+                    setGiftToEdit(null)
+                }}>
+                    <GiftIcon className="h-8 w-8 text-slate-600" />
+                    <h4 className="font-semibold">Agregar regalo</h4>
+                </button>
             </div>
+            <Modal open={openEditModal} setOpen={setOpenEditModal}>
+                {
+                    giftToEdit ? (
+                        <GiftForm gift={giftToEdit} isEditing />
+                    ) : (
+                        <GiftForm isEditing={false} />
+                    )
+                }
+            </Modal>
         </div>
     )
 }

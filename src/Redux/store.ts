@@ -6,23 +6,13 @@ import {
     PURGE,
     REGISTER,
     REHYDRATE,
-    persistReducer,
-    persistStore,
+    persistStore
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 
-import userReducer from "./Slice/Slice";
+import { userSlice } from "./Slice/user";
 
-const persistConfig = {
-    key: "root",
-    version: 1,
-    storage,
-};
-
-const rootReducer = persistReducer(persistConfig, userReducer);
-
-const store = configureStore({
-    reducer: { user: rootReducer },
+export const store = configureStore({
+    reducer: { user: userSlice.reducer },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
@@ -31,4 +21,3 @@ const store = configureStore({
         }),
 });
 export let persistor = persistStore(store);
-export default store;

@@ -2,11 +2,11 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import styles from './NavBar.module.css'
 
 const navigation = [
     { name: 'Inicio', href: '/', current: false },
-    { name: 'Mi lista', href: '/mi-lista', current: false },
-    { name: '¿Necesitas ideas?', href: '/sugerencia', current: false },
+    { name: 'Mi lista', href: '/mi-lista', current: false }
 ]
 
 function classNames(...classes: any) {
@@ -49,6 +49,7 @@ export default function NavBar() {
                                                 {item.name}
                                             </Link>
                                         ))}
+                                        <Link to={'/sugerencia'} className={`block rounded-md px-3 py-2 text-base font-medium ${styles.highlightedText}`}>¿Necesitas ideas?</Link>
                                     </div>
                                 </div>
                             </div>
@@ -115,17 +116,18 @@ export default function NavBar() {
 
                     {/* Menu mobile */}
                     <Disclosure.Panel className="sm:hidden">
-                        <div className="space-y-1 px-2 pb-3 pt-2">
+                        <div className="flex flex-col px-2 pb-3 pt-2">
                             {navigation.map((item) => (
                                 <Link
                                     key={item.name}
                                     to={item.href}
-                                    className={'text-black block rounded-md px-3 py-2 text-base font-medium'}
+                                    className={'text-black w-fit rounded-md px-3 py-2 text-base font-medium'}
                                     aria-current={item.current ? 'page' : undefined}
                                 >
                                     {item.name}
                                 </Link>
                             ))}
+                            <Link to={'/sugerencia'} className={`block rounded-md px-3 py-2 text-base font-medium ${styles.highlightedText}`}>¿Necesitas ideas?</Link>
                         </div>
                     </Disclosure.Panel>
                 </>

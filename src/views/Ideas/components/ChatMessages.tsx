@@ -20,7 +20,7 @@ export function ChatMessages({ messages }: ChatMessagesProps) {
 
     return (
         <div
-            className="w-full h-full max-h-96 overflow-y-auto px-4 py-2 border border-solid border-slate-200 bg-slate-100"
+            className="w-full h-full min-h-[300px] max-h-96 overflow-y-auto px-4 py-2 border border-solid border-slate-200 bg-slate-100"
             ref={(el) => (messagesWindow.current = el)}
         >
             {messages.map((message, idx) => (
