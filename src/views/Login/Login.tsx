@@ -11,7 +11,7 @@ export function Login() {
 
     return (
         <AuthLayout>
-            <div className="flex flex-col gap-4 p-8 justify-center text-left items-center h-full">
+            <div className="flex flex-col gap-4 p-8 justify-center text-left items-center h-full animate-fade-up animate-once animate-duration-[600ms] animate-ease-linear">
                 {isSubmiting ? (
                     <div className="w-full flex justify-center items-center">
                         <Spinner text='Ingresando' />

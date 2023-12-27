@@ -2,6 +2,7 @@ export interface IGift {
     id?: number
     title: string
     url: string
+    date: Date | null
 }
 
 export interface User {

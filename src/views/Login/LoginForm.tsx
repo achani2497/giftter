@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { setIsAuthenticated, setUserData } from '../../Redux/Slice/user'
+import { setIsLoggedIn, setUserData } from '../../Redux/Slice/user'
 import { Input, Password } from '../../components/Form/Input/Input'
 import { login } from '../../utils/Auth'
 import { Validations } from '../../utils/Validations'
@@ -14,11 +14,11 @@ export function LoginForm({ setIsSubmiting, from }: { setIsSubmiting: any, from:
     const navigate = useNavigate()
     const [error, setError] = useState('')
 
-    const submitForm = (data: any) => {
+    function submitForm(data: any) {
         setIsSubmiting(true)
         login(data)
             .then((data) => {
-                dispatch(setIsAuthenticated(true))
+                dispatch(setIsLoggedIn(true))
                 dispatch(setUserData(data))
                 navigate(from, { replace: true })
             })

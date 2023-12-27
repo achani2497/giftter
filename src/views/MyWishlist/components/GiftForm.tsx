@@ -1,20 +1,26 @@
 import { useForm } from "react-hook-form";
-import { IGift } from "utils/types";
+import { Input } from "../../../components/Form/Input/Input";
+import { supabase } from "../../../utils/Supabase";
 import { Validations } from "../../../utils/Validations";
+import { IGift } from "../../../utils/types";
 
 export function GiftForm({ gift, isEditing, isEmbeded = true }: { gift?: IGift | null, isEditing: boolean, isEmbeded?: boolean }) {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<IGift>({
         defaultValues: {
             id: gift?.id || -1,
             title: gift?.title || '',
-            url: gift?.url || ''
+            url: gift?.url || '',
+            date: gift?.date || null
         }
     })
 
-    function onSubmit(values: any) {
+    async function onSubmit(values: any) {
         console.log(values)
-        console.log(gift, isEditing)
-        reset()
+        // console.log(gift, isEditing)
+        const { data, error } = await supabase.from('gifts').insert(values).select('*')
+        // reset()
+        console.log(data)
+        console.log(error)
         // const notif = toast.loading('Realizando donación...', {
         //     position: "top-right",
         //     autoClose: 5000,
@@ -48,22 +54,11 @@ export function GiftForm({ gift, isEditing, isEmbeded = true }: { gift?: IGift |
             <h2 className='font-bold text-xl'>{isEditing ? 'Edita tu regalo ✏️' : 'Agrega tu regalo 🎁'}</h2>
 
             {/* Form Content */}
-            <div className="flex flex-col gap-2">
-                <label className="font-semibold" htmlFor="title">Nombre del regalo</label>
-                <input type="text" id="title" {...register('title', Validations.gift.title)} className={`border-2 border-solid rounded-lg px-2 py-1  ${errors?.title?.message?.toString() ? 'border-red-500' : ''}`} />
-                {errors?.title?.message?.toString() && (
-                    <span className="text-red-500 -mt-2"> {errors?.title?.message?.toString()} </span>
-                )}
-            </div>
-            <div className="flex flex-col gap-2">
-                <label className="font-semibold" htmlFor="url">URL del regalo</label>
-                <input type="url" id="url" {...register('url', Validations.gift.url)} className={`border-2 border-solid rounded-lg px-2 py-1  ${errors?.url?.message?.toString() ? 'border-red-500' : ''}`} />
-                {errors?.url?.message?.toString() && (
-                    <span className="text-red-500 -mt-2"> {errors?.url?.message?.toString()} </span>
-                )}
-            </div>
+            <Input label="Nombre del regalo" fieldName="title" register={register} errorObj={errors?.title} validations={Validations.gift.title} />
+            <Input label="URL del regalo" fieldName="url" register={register} validations={Validations.gift.url} errorObj={errors?.url} type="url" />
+            <Input label="Date" fieldName="date" register={register} validations={{}} errorObj={errors?.date} type="date" />
             {/* FormButtons */}
-            <button className="rounded-lg shadow-xl bg-yellow-200 p-1" type="submit">Enviar</button>
+            <button className="rounded-lg shadow-xl bg-yellow-400 text-slate-700 p-1" type="submit">Enviar</button>
         </form>
     )
 

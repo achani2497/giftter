@@ -19,7 +19,7 @@ export function errorReducer(state: ErrorState, action: ActionType): ErrorState 
     }
 }
 
-export function useIsAuthenticated() {
+export function useIsLoggedIn() {
     const userData = useSelector((store: any) => store.user.data);
-    return userData.isAuthenticated
+    return userData.isLoggedIn
 }

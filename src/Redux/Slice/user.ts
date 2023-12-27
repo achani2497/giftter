@@ -5,10 +5,11 @@ export const initialState = {
         isFetching: false,
     },
     data: {
+        id: '',
         first_name: '',
         last_name: '',
         email: '',
-        isAuthenticated: false
+        isLoggedIn: false,
     },
 }
 
@@ -18,12 +19,13 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUserData: (state, action) => {
-            state.data.first_name = action.payload.first_name,
-                state.data.last_name = action.payload.last_name,
-                state.data.email = action.payload.email
+            state.data.id = action.payload.id
+            state.data.first_name = action.payload.first_name
+            state.data.last_name = action.payload.last_name
+            state.data.email = action.payload.email
         },
-        setIsAuthenticated: (state, action) => {
-            state.data.isAuthenticated = action.payload
+        setIsLoggedIn: (state, action) => {
+            state.data.isLoggedIn = action.payload
         },
         setIsFetching: (state) => {
             state.status.isFetching = true;
@@ -33,6 +35,6 @@ export const userSlice = createSlice({
 
 export const {
     setUserData,
-    setIsAuthenticated,
+    setIsLoggedIn,
     setIsFetching
 } = userSlice.actions;

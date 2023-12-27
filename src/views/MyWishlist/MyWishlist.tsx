@@ -1,5 +1,6 @@
 import { ArrowRightStartOnRectangleIcon, BookmarkIcon, Cog6ToothIcon, GiftIcon, PencilIcon, PencilSquareIcon, TrashIcon, UserCircleIcon, UserPlusIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { GiftSkeleton } from "../../components/Feedback/GiftSkeleton";
 import { Modal } from "../../components/Modal/Modal";
 import { useFetchGifts } from "../../hooks/Gift";
@@ -10,7 +11,8 @@ export function MyWishlist() {
     const [isEditing, setIsEditing] = useState(false)
     const [giftToEdit, setGiftToEdit] = useState<IGift | null>()
     const [openEditModal, setOpenEditModal] = useState(false)
-    const { gifts, isLoading } = useFetchGifts('4a565e33-6c6b-4387-b863-78e5eb9dd7a2')
+    const userData = useSelector((store: any) => store.user.data);
+    const { gifts, isLoading } = useFetchGifts(userData.id)
 
     return (
         <div className="flex flex-col gap-8">

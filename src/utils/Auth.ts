@@ -1,4 +1,4 @@
-import { initialState, setIsAuthenticated, setUserData } from "../Redux/Slice/user";
+import { initialState, setIsLoggedIn, setUserData } from "../Redux/Slice/user";
 import { EmailAlreadyUsed } from "./Errors";
 import { supabase } from "./Supabase";
 import { LoginUser, SignUp, User } from './types';
@@ -13,7 +13,7 @@ export async function signUp({ email, password, first_name, last_name, birth_dat
                 data: {
                     first_name,
                     last_name,
-                    birth_date,
+                    birth_date
                 },
                 emailRedirectTo: 'localhost:5173/'
             }
@@ -21,10 +21,10 @@ export async function signUp({ email, password, first_name, last_name, birth_dat
     )
 
     if (error) {
-        console.log(error.name)
+        console.log(error)
         throw new Error(error.message)
     } else if (data.user && data.user.identities && data.user.identities.length === 0) {
-        throw new EmailAlreadyUsed('El email ingresado ya está siendo utilizado')
+        throw new EmailAlreadyUsed()
     }
 
     return data
@@ -52,7 +52,7 @@ export async function login({ email, password }: LoginUser): Promise<User> {
 
 export function logout(dispatch: any) {
     supabase.auth.signOut().then(() => {
-        dispatch(setIsAuthenticated(false))
+        dispatch(setIsLoggedIn(false))
         dispatch(setUserData(initialState))
     }).catch(e => { throw new Error(e.message) })
 }

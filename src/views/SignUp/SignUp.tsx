@@ -9,7 +9,7 @@ export function SignUp() {
 
     return (
         <AuthLayout isSignup isAwaitingConfirmation={isAwaitingConfirmation}>
-            <div className="flex flex-col gap-4 p-8 justify-center text-left items-center">
+            <div className="flex flex-col gap-4 p-8 justify-center text-left items-center animate-fade-up animate-once animate-duration-[600ms] animate-ease-linear">
                 {isSubmiting ? (
                     <div className="w-full flex justify-center items-center">
                         <Spinner text='Creando cuenta' />

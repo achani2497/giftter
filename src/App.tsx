@@ -4,6 +4,7 @@ import './App.css'
 import NavBar from './components/NavBar/NavBar'
 import { RequireAuth } from './components/ProtectedRoute'
 import './index.css'
+import { Friends } from './views/Friends/Friends'
 import { Home } from './views/Home/Home'
 import { Ideas } from './views/Ideas/Ideas'
 import { Login } from './views/Login/Login'
@@ -17,7 +18,7 @@ function App() {
   return (
     <div className='flex flex-col justify-between w-full h-screen'>
       {/* NavigationBar */}
-      {userData.isAuthenticated && <NavBar />}
+      {userData.isLoggedIn && <NavBar />}
       {/* Pages */}
       <main className='grow px-8 md:px-16 lg:px-32 py-8'>
         <Routes>
@@ -39,10 +40,15 @@ function App() {
               <Ideas />
             </RequireAuth>
           } />
+          <Route path="/amigos" element={
+            <RequireAuth>
+              <Friends />
+            </RequireAuth>
+          } />
         </Routes>
       </main>
       {/* Footer */}
-      {userData.isAuthenticated && (
+      {userData.isLoggedIn && (
         <div className='bg-red-400 px-8 md:px-16 lg:px-32 py-12 z-10'>
           <h1>Soy el footer</h1>
         </div>

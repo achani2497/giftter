@@ -56,6 +56,7 @@ export function SignUpForm({
             <Input label='Tu nombre' fieldName='first_name' validations={Validations.user.first_name} register={register} errorObj={errors?.first_name} />
             <Input label='Tu apellido' fieldName='last_name' validations={Validations.user.last_name} register={register} errorObj={errors?.last_name} />
             <Input label='Email' fieldName='email' validations={Validations.user.email} register={register} errorObj={errors?.email} />
+            <Input label='Fecha de Nacimiento' fieldName='birth_date' type="date" validations={{}} register={register} errorObj={errors?.birth_date} />
             {error.type === 'EMAIL_USED' && (<span className='text-red-500 -mt-4'>{error.message}</span>)}
             <Password label='Contraseña' fieldName='password' register={register} errorObj={errors?.password} />
             <Input type="password" label='Confirmación de Contraseña' fieldName='password_confirm' validations={{

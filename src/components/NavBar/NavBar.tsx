@@ -8,7 +8,9 @@ import styles from './NavBar.module.css'
 
 const navigation = [
     { name: 'Inicio', href: '/', current: false },
-    { name: 'Mi lista', href: '/mi-lista', current: false }
+    { name: 'Mi lista', href: '/mi-lista', current: false },
+    { name: 'Mis amigos', href: '/amigos', current: false },
+
 ]
 
 function classNames(...classes: any) {
