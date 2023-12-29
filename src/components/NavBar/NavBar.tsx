@@ -104,7 +104,6 @@ export default function NavBar() {
                                                     </a>
                                                 )}
                                             </Menu.Item> */}
-                                            {user.username}
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <button
@@ -126,16 +125,13 @@ export default function NavBar() {
                     <Disclosure.Panel className="sm:hidden animate-fade-down animate-once animate-duration-[600ms] animate-ease-linear">
                         <div className="flex flex-col px-2 pb-3 pt-2">
                             {navigation.map((item) => (
-                                <Link
-                                    key={item.name}
-                                    to={item.href}
-                                    className={'text-black w-fit rounded-md px-3 py-2 text-base font-medium'}
-                                    aria-current={item.current ? 'page' : undefined}
-                                >
+                                <Disclosure.Button as={Link} to={item.href} key={item.name} className={'text-black w-fit rounded-md px-3 py-2 text-base font-medium'} onClick={close}>
                                     {item.name}
-                                </Link>
+                                </Disclosure.Button>
                             ))}
-                            <Link to={'/sugerencia'} className={`block rounded-md px-3 py-2 text-base font-medium ${styles.highlightedText}`}>¿Necesitas ideas?</Link>
+                            <Disclosure.Button as={Link} to={'/sugerencia'} className={`block rounded-md px-3 py-2 text-base font-medium ${styles.highlightedText}`} onClick={close}>
+                                ¿Necesitas ideas?
+                            </Disclosure.Button>
                         </div>
                     </Disclosure.Panel>
                 </>
