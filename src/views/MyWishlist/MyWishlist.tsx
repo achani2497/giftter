@@ -9,7 +9,7 @@ import { GiftForm } from "./components/GiftForm";
 
 export function MyWishlist() {
     const [isEditing, setIsEditing] = useState(false)
-    const [giftToEdit, setGiftToEdit] = useState<IGift | null>()
+    const [giftToEdit, setGiftToEdit] = useState<IGift | null>(null)
     const [openEditModal, setOpenEditModal] = useState(false)
     const userData = useSelector((store: any) => store.user.data);
     const { gifts, isLoading } = useFetchGifts(userData.id)

@@ -1,7 +1,7 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logout } from '../../utils/Auth'
 import styles from './NavBar.module.css'
@@ -19,6 +19,7 @@ function classNames(...classes: any) {
 
 export default function NavBar() {
     const dispatch = useDispatch()
+    const user = useSelector((store: any) => store.user.data)
     return (
         <Disclosure as="nav" className="shadow-xl">
             {({ open }) => (
@@ -59,9 +60,10 @@ export default function NavBar() {
                                 </div>
                             </div>
                             {/* Dropdown perfil */}
-                            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                                <Menu as="div" className="relative ml-3">
-                                    <div>
+                            <div className="absolute inset-y-0 right-0 w-fit flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                                <Menu as="div" className="relative">
+                                    <div className="flex gap-2 items-center">
+                                        <span className="text-slate-700 font-medium">¡Hola, {user.first_name}! </span>
                                         <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                             <span className="absolute -inset-1.5" />
                                             <span className="sr-only">Abrir menu de usuario</span>
@@ -102,6 +104,7 @@ export default function NavBar() {
                                                     </a>
                                                 )}
                                             </Menu.Item> */}
+                                            {user.username}
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <button
@@ -120,7 +123,7 @@ export default function NavBar() {
                     </div>
 
                     {/* Menu mobile */}
-                    <Disclosure.Panel className="sm:hidden">
+                    <Disclosure.Panel className="sm:hidden animate-fade-down animate-once animate-duration-[600ms] animate-ease-linear">
                         <div className="flex flex-col px-2 pb-3 pt-2">
                             {navigation.map((item) => (
                                 <Link

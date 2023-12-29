@@ -10,6 +10,7 @@ export const initialState = {
         last_name: '',
         email: '',
         isLoggedIn: false,
+        username: ''
     },
 }
 
@@ -23,6 +24,7 @@ export const userSlice = createSlice({
             state.data.first_name = action.payload.first_name
             state.data.last_name = action.payload.last_name
             state.data.email = action.payload.email
+            state.data.username = action.payload.username
         },
         setIsLoggedIn: (state, action) => {
             state.data.isLoggedIn = action.payload

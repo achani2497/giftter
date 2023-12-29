@@ -1,53 +1,52 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FriendsService } from "../../services/Friends";
+import { FriendLyrics, FriendsService } from "../../services/Friends";
+import { ContactSearchComponent } from "./components/ContactSearchComponent";
+import { FriendsList } from "./components/FriendsList";
+
+export type Friend = {
+    id: string,
+    first_name: string,
+    last_name: string,
+    username: string
+}
 
 export function Friends() {
     const userData = useSelector((store: any) => store.user.data);
     const [friends, setFriends] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
-        // FriendLyrics()
-        async function fetch() {
-            const { data, error } = await FriendsService.fetchFriends(userData.id)
-            if (error) {
-                throw new Error(error.message)
-            }
-            return data
-
+    async function fetch() {
+        const { data, error } = await FriendsService.fetchFriends(userData.id)
+        if (error) {
+            throw new Error(error.message)
         }
+        return data
+    }
 
+    function fetchAndSetFriends() {
         fetch()
             .then((data: any) => {
                 setFriends(data)
+                setIsLoading(false)
             })
             .catch(error => {
                 console.log(error)
             })
+    }
+
+    useEffect(() => {
+        FriendLyrics()
+        setIsLoading(true)
+        fetchAndSetFriends()
     }, [])
 
     return (
-        <>
-            <h1>Amigos</h1>
-            <ul>
-                {
-                    friends.map((friend: any, index: number) => {
-                        return (
-                            <li key={index} className="flex flex-col w-full bg-slate-200 rounded-lg shadow-lg p-4">
-                                <span>
-                                    {`${friend.to.first_name + ' ' + friend.to.last_name}`}
-                                </span>
-                                <span>
-                                    {friend.to.email}
-                                </span>
-                                <span>
-                                    {friend.to.birth_date}
-                                </span>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
-        </>
+        <div className="flex flex-col gap-8 h-full">
+            <ContactSearchComponent userId={userData.id} onAddFriend={fetchAndSetFriends} />
+            <div className="flex flex-col gap-2">
+                <FriendsList friends={friends} isLoading={isLoading} />
+            </div>
+        </div>
     )
 }

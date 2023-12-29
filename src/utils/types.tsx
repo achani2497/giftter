@@ -11,6 +11,7 @@ export interface User {
     last_name: string
     email: string
     birth_date: string
+    username: string
 }
 
 export interface SignUp extends User {

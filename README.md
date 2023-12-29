@@ -31,7 +31,7 @@ export default {
 
 Features
 [ ] Agregar amigos, primero via mail pero una mejora seria un buscador de amigos
-[ ] En el inicio tiene que aparecer si un amigo agregó un regalo a su lista de deseos
+[ ] En el inicio tiene que aparecer los cumpleaños del mes actual, algunos elemenos de mi propia whislist, algunos de mis amigos, un boton para ir a las sugerencias
 [ ] Armar / Editar mis listas de regalos (Cada regalo tiene que tener un boton con el que se pueda marcar )
 [ ] Visitar el perfil de un amigo, donde puedo ver su fecha de cumpleaños y su lista de regalos
 [ ] Seccion / Chatbot donde pueda pedir sugerencias de regalos. Cuando termine de generar las ideas, el usuario puede seleccionar a qué amigo se le asigna esa conversacion para que le queden guardadas las sugerencias

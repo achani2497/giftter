@@ -1,8 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/16/solid'
 import { Fragment, useRef } from 'react'
+import { Spinner } from '../../components/Feedback/Spinner/Spinner'
 
-export function Modal({ open, setOpen, children }: { open: boolean, setOpen: any, children: JSX.Element }) {
+export function Modal({ open, setOpen, children, isLoading = false }: { open: boolean, setOpen: any, children: JSX.Element, isLoading?: boolean }) {
 
     const cancelButtonRef = useRef(null)
 
@@ -42,8 +43,7 @@ export function Modal({ open, setOpen, children }: { open: boolean, setOpen: any
                                         <XMarkIcon className='text-black h-8 w-8' />
                                     </button>
                                 </div>
-
-                                {children}
+                                {isLoading ? <Spinner text='Cargando' /> : children}
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

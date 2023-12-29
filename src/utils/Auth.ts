@@ -4,7 +4,7 @@ import { supabase } from "./Supabase";
 import { LoginUser, SignUp, User } from './types';
 
 
-export async function signUp({ email, password, first_name, last_name, birth_date }: SignUp) {
+export async function signUp({ email, password, first_name, last_name, birth_date, username }: SignUp) {
     const { data, error } = await supabase.auth.signUp(
         {
             email,
@@ -13,7 +13,8 @@ export async function signUp({ email, password, first_name, last_name, birth_dat
                 data: {
                     first_name,
                     last_name,
-                    birth_date
+                    birth_date,
+                    username
                 },
                 emailRedirectTo: 'localhost:5173/'
             }
@@ -46,7 +47,8 @@ export async function login({ email, password }: LoginUser): Promise<User> {
         birth_date: data.user.user_metadata.birth_date,
         first_name: data.user.user_metadata.first_name,
         last_name: data.user.user_metadata.last_name,
-        email: data.user.email || ''
+        email: data.user.email || '',
+        username: data.user.user_metadata.username
     }
 }
 

@@ -1,4 +1,4 @@
-import { supabase } from "../utils/Supabase"
+import { supabase } from "../utils/Supabase";
 
 export function FriendLyrics() {
     console.log(`
@@ -54,7 +54,40 @@ export class FriendsService {
     static fetchFriends(id: string) {
         return supabase
             .from('friends')
-            .select('id, from:user_request(first_name), to:user_requested(first_name, last_name, birth_date, email)')
+            .select('id, from:user_request(first_name), to:user_requested(first_name, last_name, birth_date, username)')
             .eq('user_request', id)
+    }
+
+    static searchFriends(keyword: string, user_searching_id: string) {
+        return supabase.from('users')
+            .select('id, first_name, last_name, username')
+            .or(`first_name.ilike.%${keyword}%, last_name.ilike.%${keyword}%, username.ilike.%${keyword}%`)
+            .neq('id', user_searching_id)
+    }
+
+    static async usersAreFriends(idRequest: string, idRequested: string) {
+        const { data, error } = await supabase.from('friends')
+            .select()
+            .eq('user_request', idRequest)
+            .eq('user_requested', idRequested)
+
+        if (error) {
+            console.log(error)
+        }
+
+        return data && data.length > 0
+
+    }
+
+    static addFriend(idRequest: string, idRequested: string) {
+        return supabase.from('friends').insert([{
+            user_request: idRequest,
+            user_requested: idRequested,
+            status: 'accepted'
+        }, {
+            user_request: idRequested,
+            user_requested: idRequest,
+            status: 'accepted'
+        }]).select()
     }
 }
